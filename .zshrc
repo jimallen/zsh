@@ -14,7 +14,7 @@ fi
 
 while read file
 do 
-  source "$HOME/.config/zsh/$file.zsh"
+  source "$HOME/zsh/$file.zsh"
 done <<-EOF
 theme
 env
