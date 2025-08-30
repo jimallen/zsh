@@ -2,6 +2,22 @@
 ## Aliases
 ##
 
+# Put this in your ~/.bashrc or ~/.zshrc
+
+# ~/.bashrc or ~/.zshrc
+
+source ~/zsh/ghpick.zsh
+
+
+
+
+
+
+
+# Short alias to match your style
+alias ghin='ghpick'
+
+
 alias timeshift='sudo -E timeshift-gtk'
 alias run='pnpm run'
 alias c="clear"
@@ -13,7 +29,7 @@ alias mtar='tar -zcvf' # mtar <archive_compress>
 alias utar='tar -zxvf' # utar <archive_decompress> <file_list>
 alias z='zip -r' # z <archive_compress> <file_list>
 alias uz='unzip' # uz <archive_decompress> -d <dir>
-alias sr='source .zshrc'
+alias sr='source ~/.config/zsh/env.zsh'
 alias ..="cd .."
 alias psg="ps aux | grep -v grep | grep -i -e VSZ -e" 
 alias mkdir="mkdir -p"
