@@ -29,6 +29,7 @@ source $ZSH/oh-my-zsh.sh
 #pokemon-colorscripts --no-title -s -r | fastfetch -c $HOME/.config/fastfetch/config-pokemon.jsonc --logo-type file-raw --logo-height 10 --logo-width 5 --logo -
 
 # fastfetch moved to top of file before P10k instant prompt to avoid warnings
+fastfetch -c $HOME/.config/fastfetch/config-compact.jsonc
 
 while read file
 do 
