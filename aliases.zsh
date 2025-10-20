@@ -16,6 +16,7 @@ source ~/zsh/ghpick.zsh
 
 # Short alias to match your style
 alias ghin='ghpick'
+alias claudeyolo='claude --dangerously-skip-permissions  '
 
 
 alias timeshift='sudo -E timeshift-gtk'
