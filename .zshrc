@@ -28,8 +28,7 @@ source $ZSH/oh-my-zsh.sh
 #pokemon-colorscripts --no-title -s -r #without fastfetch
 #pokemon-colorscripts --no-title -s -r | fastfetch -c $HOME/.config/fastfetch/config-pokemon.jsonc --logo-type file-raw --logo-height 10 --logo-width 5 --logo -
 
-# fastfetch. Will be disabled if above colorscript was chosen to install
-fastfetch -c $HOME/.config/fastfetch/config-compact.jsonc
+# fastfetch moved to top of file before P10k instant prompt to avoid warnings
 
 while read file
 do 
@@ -47,7 +46,6 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
 
-alias claude="/home/jima/.claude/local/claude"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

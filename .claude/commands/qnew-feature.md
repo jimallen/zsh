@@ -37,10 +37,11 @@ Generate a Product Requirements Document (PRD) for new features in existing code
 - Ask clarifying questions to understand the feature
 
 **If there is a figma file**
-- either attached to the linear ticket or the user specifies a file, use that for UI/UX guidence. 
+- either attached to the linear ticket or the user specifies a file, use that for UI/UX guidence.
 
 **if no figma file**
 -  as about UI/UX concerns
+
 
 ## Clarifying Questions to Ask
 
@@ -91,4 +92,4 @@ Generate a Product Requirements Document (PRD) for new features in existing code
 - Ask clarifying questions that consider the existing system
 - Incorporate both user answers and codebase analysis into the PRD
 - Focus on how the new feature integrates with existing code
-- Make sure to use @.agent.rules.md for instructions and format. 
+- Make sure to use @.agent.rules.md for instructions and format.
