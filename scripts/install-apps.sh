@@ -112,7 +112,7 @@ setup_zsh() {
     # Install Oh My Zsh if not present
     if [[ ! -d "$OMZ_DIR" ]]; then
         print_info "Installing Oh My Zsh..."
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     else
         print_info "Oh My Zsh already installed"
     fi
