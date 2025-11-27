@@ -24,7 +24,6 @@ ZSH_REPO_DIR="$(dirname "$SCRIPT_DIR")"
 ZEN_BACKUP="$SCRIPT_DIR/zen-essentials.tar.gz"
 ZEN_DIR="$HOME/.zen"
 OMZ_DIR="$HOME/.oh-my-zsh"
-P10K_DIR="$OMZ_DIR/custom/themes/powerlevel10k"
 
 # =============================================================================
 # APPLICATION LIST
@@ -119,9 +118,9 @@ setup_zsh() {
     fi
 
     # Install Powerlevel10k theme
-    if [[ ! -d "$P10K_DIR" ]]; then
+    if [[ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]]; then
         print_info "Installing Powerlevel10k theme..."
-        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$P10K_DIR"
+        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
     else
         print_info "Powerlevel10k already installed"
     fi
