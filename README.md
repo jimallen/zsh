@@ -61,7 +61,10 @@ zsh/
 ├── ghpick.zsh         # GitHub repository picker tool
 ├── mac.aliases.zsh    # macOS specific aliases
 ├── mac.plugins.zsh    # macOS specific plugins
-└── mac.zshrc          # macOS specific configuration
+├── mac.zshrc          # macOS specific configuration
+└── scripts/
+    ├── install-apps.sh        # Application installer script
+    └── zen-essentials.tar.gz  # Zen browser profile backup
 ```
 
 ## Configuration Files
@@ -107,6 +110,63 @@ Common git operations are shortened:
 - `gp` - git push
 - `gco` - git checkout
 - Plus 150+ more git aliases
+
+## Scripts
+
+### Application Installer (`scripts/install-apps.sh`)
+
+A maintainable script for setting up a new Arch Linux system with essential applications and Zen browser profile.
+
+#### Installed Applications
+
+- `google-chrome` - Google Chrome browser
+- `slack-desktop` - Slack messaging app
+- `wasistlos` - WhatsApp desktop client
+- `claude-desktop-native` - Claude AI desktop app
+- `github-cli` - GitHub CLI tool
+- `zen-browser-bin` - Zen browser
+
+#### Usage
+
+```bash
+# Install all apps and restore Zen profile (skips Zen if ~/.zen exists)
+~/zsh/scripts/install-apps.sh
+
+# Install apps only (skip Zen profile restore)
+~/zsh/scripts/install-apps.sh --apps-only
+
+# Restore Zen profile only (skip app installation)
+~/zsh/scripts/install-apps.sh --zen-only
+
+# Force overwrite existing Zen profile (backs up to ~/.zen.bak)
+~/zsh/scripts/install-apps.sh --force
+
+# Show help
+~/zsh/scripts/install-apps.sh --help
+```
+
+#### Adding New Applications
+
+Edit `scripts/install-apps.sh` and add packages to the `AUR_APPS` array:
+
+```bash
+AUR_APPS=(
+    "google-chrome"
+    "slack-desktop"
+    "your-new-app"  # Add here
+)
+```
+
+#### Zen Browser Profile
+
+The script includes a backup of Zen browser essentials:
+- Bookmarks and history (`places.sqlite`)
+- Settings (`prefs.js`)
+- Logins and certificates
+- Session data (pinned tabs, workspaces)
+- Keyboard shortcuts and themes
+
+**Note:** Extensions are not included in the backup and will need to be reinstalled on first launch.
 
 ## Customization
 
