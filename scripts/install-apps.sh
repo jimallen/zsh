@@ -20,8 +20,11 @@ NC='\033[0m' # No Color
 # CONFIGURATION
 # =============================================================================
 
+ZSH_REPO_DIR="$(dirname "$SCRIPT_DIR")"
 ZEN_BACKUP="$SCRIPT_DIR/zen-essentials.tar.gz"
 ZEN_DIR="$HOME/.zen"
+OMZ_DIR="$HOME/.oh-my-zsh"
+P10K_DIR="$OMZ_DIR/custom/themes/powerlevel10k"
 
 # =============================================================================
 # APPLICATION LIST
@@ -102,6 +105,80 @@ restore_zen_profile() {
     print_warn "Note: Extensions will need to be reinstalled on first launch"
 }
 
+setup_zsh() {
+    local force="$1"
+
+    print_info "Setting up Zsh configuration..."
+
+    # Install Oh My Zsh if not present
+    if [[ ! -d "$OMZ_DIR" ]]; then
+        print_info "Installing Oh My Zsh..."
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    else
+        print_info "Oh My Zsh already installed"
+    fi
+
+    # Install Powerlevel10k theme
+    if [[ ! -d "$P10K_DIR" ]]; then
+        print_info "Installing Powerlevel10k theme..."
+        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$P10K_DIR"
+    else
+        print_info "Powerlevel10k already installed"
+    fi
+
+    # Symlink .zshrc
+    if [[ -L "$HOME/.zshrc" ]]; then
+        local current_target
+        current_target=$(readlink "$HOME/.zshrc")
+        if [[ "$current_target" == "$ZSH_REPO_DIR/.zshrc" || "$current_target" == "zsh/.zshrc" ]]; then
+            print_info ".zshrc symlink already correct"
+        else
+            if [[ "$force" == true ]]; then
+                print_info "Updating .zshrc symlink..."
+                ln -sf "$ZSH_REPO_DIR/.zshrc" "$HOME/.zshrc"
+            else
+                print_warn ".zshrc symlink points elsewhere: $current_target"
+                print_info "Use --force to overwrite"
+            fi
+        fi
+    elif [[ -f "$HOME/.zshrc" ]]; then
+        if [[ "$force" == true ]]; then
+            print_info "Backing up existing .zshrc to .zshrc.bak"
+            mv "$HOME/.zshrc" "$HOME/.zshrc.bak"
+            ln -s "$ZSH_REPO_DIR/.zshrc" "$HOME/.zshrc"
+            print_info ".zshrc symlinked"
+        else
+            print_warn ".zshrc exists and is not a symlink"
+            print_info "Use --force to backup and replace"
+        fi
+    else
+        ln -s "$ZSH_REPO_DIR/.zshrc" "$HOME/.zshrc"
+        print_info ".zshrc symlinked"
+    fi
+
+    # Symlink .p10k.zsh
+    if [[ -f "$ZSH_REPO_DIR/.p10k.zsh" ]]; then
+        if [[ -L "$HOME/.p10k.zsh" ]]; then
+            print_info ".p10k.zsh symlink already exists"
+        elif [[ -f "$HOME/.p10k.zsh" ]]; then
+            if [[ "$force" == true ]]; then
+                print_info "Backing up existing .p10k.zsh to .p10k.zsh.bak"
+                mv "$HOME/.p10k.zsh" "$HOME/.p10k.zsh.bak"
+                ln -s "$ZSH_REPO_DIR/.p10k.zsh" "$HOME/.p10k.zsh"
+                print_info ".p10k.zsh symlinked"
+            else
+                print_warn ".p10k.zsh exists and is not a symlink"
+                print_info "Use --force to backup and replace"
+            fi
+        else
+            ln -s "$ZSH_REPO_DIR/.p10k.zsh" "$HOME/.p10k.zsh"
+            print_info ".p10k.zsh symlinked"
+        fi
+    fi
+
+    print_info "Zsh setup complete"
+}
+
 # =============================================================================
 # MAIN
 # =============================================================================
@@ -110,27 +187,36 @@ show_help() {
     echo "Usage: $(basename "$0") [OPTIONS]"
     echo ""
     echo "Options:"
-    echo "  --apps-only     Install applications only (skip Zen restore)"
-    echo "  --zen-only      Restore Zen profile only (skip app installation)"
-    echo "  --force         Overwrite existing Zen profile if it exists"
+    echo "  --apps-only     Install applications only"
+    echo "  --zen-only      Restore Zen profile only"
+    echo "  --zsh-only      Setup Zsh only (Oh My Zsh, Powerlevel10k, symlinks)"
+    echo "  --force         Overwrite existing files/profiles"
     echo "  --help          Show this help message"
     echo ""
-    echo "With no options, installs all apps and restores Zen profile (skips if exists)."
+    echo "With no options, runs full setup: apps, Zsh config, and Zen profile."
 }
 
 main() {
     local install_apps=true
+    local setup_zsh_config=true
     local restore_zen=true
     local force=false
 
     while [[ $# -gt 0 ]]; do
         case $1 in
             --apps-only)
+                setup_zsh_config=false
                 restore_zen=false
                 shift
                 ;;
             --zen-only)
                 install_apps=false
+                setup_zsh_config=false
+                shift
+                ;;
+            --zsh-only)
+                install_apps=false
+                restore_zen=false
                 shift
                 ;;
             --force)
@@ -159,6 +245,11 @@ main() {
             install_app "$app"
             echo ""
         done
+    fi
+
+    if [[ "$setup_zsh_config" == true ]]; then
+        setup_zsh "$force"
+        echo ""
     fi
 
     if [[ "$restore_zen" == true ]]; then

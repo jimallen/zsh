@@ -30,13 +30,14 @@ source ~/.zshrc   # or use alias: sr
 
 ### install-apps.sh
 
-Installs AUR packages and restores Zen browser profile:
+Full system setup: Zsh config, AUR packages, and Zen browser profile:
 
 ```bash
-~/zsh/scripts/install-apps.sh              # Full install
-~/zsh/scripts/install-apps.sh --apps-only  # Skip Zen profile
-~/zsh/scripts/install-apps.sh --zen-only   # Skip app install
-~/zsh/scripts/install-apps.sh --force      # Overwrite existing Zen profile
+~/zsh/scripts/install-apps.sh              # Full setup
+~/zsh/scripts/install-apps.sh --apps-only  # AUR apps only
+~/zsh/scripts/install-apps.sh --zsh-only   # Oh My Zsh, Powerlevel10k, symlinks
+~/zsh/scripts/install-apps.sh --zen-only   # Zen profile only
+~/zsh/scripts/install-apps.sh --force      # Overwrite existing files
 ```
 
 To add apps, edit the `AUR_APPS` array in the script.

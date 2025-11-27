@@ -115,7 +115,7 @@ Common git operations are shortened:
 
 ### Application Installer (`scripts/install-apps.sh`)
 
-A maintainable script for setting up a new Arch Linux system with essential applications and Zen browser profile.
+A maintainable script for setting up a new Arch Linux system with Zsh configuration, essential applications, and Zen browser profile.
 
 #### Installed Applications
 
@@ -129,21 +129,32 @@ A maintainable script for setting up a new Arch Linux system with essential appl
 #### Usage
 
 ```bash
-# Install all apps and restore Zen profile (skips Zen if ~/.zen exists)
+# Full setup: apps, Zsh config, and Zen profile
 ~/zsh/scripts/install-apps.sh
 
-# Install apps only (skip Zen profile restore)
+# Install apps only
 ~/zsh/scripts/install-apps.sh --apps-only
 
-# Restore Zen profile only (skip app installation)
+# Setup Zsh only (Oh My Zsh, Powerlevel10k, symlinks)
+~/zsh/scripts/install-apps.sh --zsh-only
+
+# Restore Zen profile only
 ~/zsh/scripts/install-apps.sh --zen-only
 
-# Force overwrite existing Zen profile (backs up to ~/.zen.bak)
+# Force overwrite existing files (backs up existing)
 ~/zsh/scripts/install-apps.sh --force
 
 # Show help
 ~/zsh/scripts/install-apps.sh --help
 ```
+
+#### Zsh Setup
+
+The `--zsh-only` option (or full setup) will:
+- Install Oh My Zsh if not present
+- Install Powerlevel10k theme
+- Symlink `.zshrc` → `~/zsh/.zshrc`
+- Symlink `.p10k.zsh` → `~/zsh/.p10k.zsh`
 
 #### Adding New Applications
 
